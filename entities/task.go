@@ -1,7 +1,7 @@
 package entities
 
 // menampung data" task yang diambil dari database
-type task struct {
+type Task struct {
 	Id         int64
 	TaskDetail string
 	Assignee   string
