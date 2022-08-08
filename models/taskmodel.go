@@ -26,6 +26,43 @@ func NewTaskModel() *TaskModel {
 	}
 }
 
+// func menampilkan data
+func (t *TaskModel) FindAll() ([]entities.Task, error) {
+	rows, err := t.conn.Query("SELECT * FROM task")
+	if err != nil {
+		return []entities.Task{}, err
+	}
+	//jika tdk ada err tutup con database
+	defer rows.Close()
+
+	// create variabel  untuk menampung data task
+	var dataTask []entities.Task
+	for rows.Next() {
+		// var menampung 1 task
+		var task entities.Task
+		rows.Scan(
+			&task.Id,
+			&task.TaskDetail,
+			&task.Assignee,
+			&task.Status,
+			&task.Deadline,
+		)
+
+		// append task ke data task
+		if task.Status == "1" {
+			task.Status = "Progress"
+		} else if task.Status == "2" {
+			task.Status = "On-Progress"
+		} else {
+			task.Status = "Done"
+		}
+
+		dataTask = append(dataTask, task)
+	}
+	return dataTask, nil
+
+}
+
 // struct method untuk proses menyimpan ke databsase
 func (t *TaskModel) Create(task entities.Task) bool {
 	result, err := t.conn.Exec("insert into task (task_detail,assignee,status,deadline) values(?,?,?,?)", task.TaskDetail, task.Assignee, task.Status, task.Deadline)

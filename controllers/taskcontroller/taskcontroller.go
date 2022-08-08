@@ -12,11 +12,19 @@ import (
 var taskModel = models.NewTaskModel()
 
 func Index(response http.ResponseWriter, request *http.Request) {
+
+	// panggil task di taskmodel untuk menampilkan di index
+	task, _ := taskModel.FindAll()
+
+	data := map[string]interface{}{
+		"task": task,
+	}
+
 	temp, err := template.ParseFiles("views/task/index.html")
 	if err != nil {
 		panic(err)
 	}
-	temp.Execute(response, nil)
+	temp.Execute(response, data)
 
 }
 
