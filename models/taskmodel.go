@@ -103,3 +103,8 @@ func (t *TaskModel) Update(task entities.Task) error {
 	}
 	return nil
 }
+
+// delete
+func (t *TaskModel) Delete(id int64) {
+	t.conn.Exec("delete from task where id = ?", id)
+}

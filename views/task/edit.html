@@ -20,67 +20,70 @@
 <body>
     <div class="container-sm mt-5">
         <h3 class="d-flex justify-content-center">Form Update Task</h3>
-        <div class="mt-5 d-flex justify-content-end">
-            <a href="/task" class="btn btn-sm btn-primary">Show Task</a>
-        </div>
+        <div class="card p-3">
+            <div class="mt-3 d-flex justify-content-end">
 
-        <!-- pesan  -->
-        {{if .pesan}}
-        <div class="alert alert-success">
-            {{.pesan}}
-        </div>
-        {{end}}
-        <!-- pesan -->
-
-
-
-
-        <form action="/task/edit" method="post" class="p-3 mt-2">
-            <label class="form-label">Task Detail</label>
-            <div class="form-floating">
-                <textarea id="taskDetail" name="taskDetail" class="form-control {{ if .validation.TaskDetail }} is-invalid {{ end }}" placeholder="Task a comment here">{{ .task.TaskDetail }}</textarea>
-                <div class="invalid-feedback">
-                    {{ .validation.TaskDetail }}
-
-                </div>
-                <label for="taskDetail">Task Comments.....</label>
-
-            </div>
-            <div class="mb-3">
-                <label for="Assignee" class="form-label">Assignee</label>
-                <input type="text" name="Assignee" value="{{ .task.Assignee}}" class="form-control  {{ if .validation.Assignee }} is-invalid {{ end }}" placeholder="Enter Assignee ..">
-                <div class="invalid-feedback">
-                    {{ .validation.Assignee }}
-                </div>
+                <a href="/task" class="btn btn-sm btn-primary">Show Task</a>
             </div>
 
-            <div class="mb-3">
-                <label for="Status" class="form-label">Status</label>
-                <select name="Status" id="Status" class="form-control {{ if .validation.Status }} is-invalid {{ end }}">
+            <!-- pesan  -->
+            {{if .pesan}}
+            <div class="alert alert-success">
+                {{.pesan}}
+            </div>
+            {{end}}
+            <!-- pesan -->
+
+
+
+
+            <form action="/task/edit" method="post" class="p-3 mt-2">
+                <label class="form-label">Task Detail</label>
+                <div class="form-floating">
+                    <textarea id="taskDetail" name="taskDetail" class="form-control {{ if .validation.TaskDetail }} is-invalid {{ end }}" placeholder="Task a comment here">{{ .task.TaskDetail }}</textarea>
+                    <div class="invalid-feedback">
+                        {{ .validation.TaskDetail }}
+
+                    </div>
+                    <label for="taskDetail">Task Comments.....</label>
+
+                </div>
+                <div class="mb-3">
+                    <label for="Assignee" class="form-label">Assignee</label>
+                    <input type="text" name="Assignee" value="{{ .task.Assignee}}" class="form-control  {{ if .validation.Assignee }} is-invalid {{ end }}" placeholder="Enter Assignee ..">
+                    <div class="invalid-feedback">
+                        {{ .validation.Assignee }}
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="Status" class="form-label">Status</label>
+                    <select name="Status" id="Status" class="form-control {{ if .validation.Status }} is-invalid {{ end }}">
                     <option  value=""> --pilih status task-- </option>
                     <option {{ if eq .task.Status `1` }} selected {{end}} value="1">progress</option>
                     <option {{ if eq .task.Status `2` }} selected {{end}}  value="2">on progress</option>
                     <option  {{ if eq .task.Status `3` }} selected {{end}}  value="3">Done</option>
                 </select>
-                <div class="invalid-feedback">
-                    {{ .validation.Status }}
+                    <div class="invalid-feedback">
+                        {{ .validation.Status }}
 
+                    </div>
                 </div>
-            </div>
-            <div class="mb-3">
-                <label for="Deadline" class="form-label">Deadline</label>
-                <input type="date" value="{{ .task.Deadline }}" class="form-control {{ if .validation.Deadline }} is-invalid {{ end }}" name="Deadline" id="Deadline">
-                <div class="invalid-feedback">
-                    {{ .validation.Deadline }}
+                <div class="mb-3">
+                    <label for="Deadline" class="form-label">Deadline</label>
+                    <input type="date" value="{{ .task.Deadline }}" class="form-control {{ if .validation.Deadline }} is-invalid {{ end }}" name="Deadline" id="Deadline">
+                    <div class="invalid-feedback">
+                        {{ .validation.Deadline }}
 
+                    </div>
                 </div>
-            </div>
 
-            <div class="d-grid gap-2">
-                <input type="text" name="id" value="{{ .task.Id }}">
-                <button type="submit" class="btn btn-primary ">Update</button>
-            </div>
-        </form>
+                <div class="d-grid gap-2 mb-5 mt-5">
+                    <input type="hidden" name="id" value="{{ .task.Id }}">
+                    <button type="submit" class="btn btn-primary ">Update</button>
+                </div>
+            </form>
+        </div>
 
 
     </div>
