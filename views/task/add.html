@@ -38,25 +38,43 @@
         <form action="/task/add" method="post" class="p-3 mt-2">
             <label class="form-label">Task Detail</label>
             <div class="form-floating">
-                <textarea class="form-control" placeholder="Task a comment here" id="taskDetail" name="taskDetail" required></textarea>
+                <textarea id="taskDetail" value="{{ .task.TaskDetail }}" name="taskDetail" class="form-control {{ if .validation.TaskDetail }} is-invalid {{ end }}" placeholder="Task a comment here"></textarea>
+                <div class="invalida-feedback">
+                    {{ .validation.TaskDetail }}
+
+                </div>
                 <label for="taskDetail">Task Comments.....</label>
+
             </div>
             <div class="mb-3">
                 <label for="Assignee" class="form-label">Assignee</label>
-                <input type="text" class="form-control" name="Assignee" id="Assignee" required>
+                <input name="Assignee" value="{{ .task.Assignee }}" id="Assignee" type="text" class="form-control  {{ if .validation.Assignee }} is-invalid {{ end }}">
+                <div class="invalida-feedback">
+                    {{ .validation.Assignee }}
+
+                </div>
             </div>
+
             <div class="mb-3">
                 <label for="Status" class="form-label">Status</label>
-                <select name="Status" id="Status" class="form-control" required>
+                <select name="Status" id="Status" class="form-control {{ if .validation.Status }} is-invalid {{ end }}">
                     <option value=""> --pilih status task-- </option>
                     <option value="1">progress</option>
                     <option value="2">on progress</option>
                     <option value="3">Done</option>
                 </select>
+                <div class="invalida-feedback">
+                    {{ .validation.Status }}
+
+                </div>
             </div>
             <div class="mb-3">
                 <label for="Deadline" class="form-label">Deadline</label>
-                <input type="date" class="form-control" name="Deadline" id="Deadline" required>
+                <input type="date" value="{{ .task.Deadline }}" class="form-control {{ if .validation.Deadline }} is-invalid {{ end }}" name="Deadline" id="Deadline">
+                <div class="invalida-feedback">
+                    {{ .validation.Deadline }}
+
+                </div>
             </div>
 
             <div class="d-grid gap-2">

@@ -3,6 +3,7 @@ package models
 import (
 	"database/sql"
 	"fmt"
+	"time"
 
 	"github.com/refitrihidayatullah/task-go/config"
 	"github.com/refitrihidayatullah/task-go/entities"
@@ -56,7 +57,10 @@ func (t *TaskModel) FindAll() ([]entities.Task, error) {
 		} else {
 			task.Status = "Done"
 		}
-
+		// yyyy-mm-dd
+		deadline, _ := time.Parse("2006-01-02", task.Deadline)
+		//dd-mm-yyyy
+		task.Deadline = deadline.Format("02-01-2006")
 		dataTask = append(dataTask, task)
 	}
 	return dataTask, nil

@@ -5,8 +5,12 @@ import (
 	"text/template"
 
 	"github.com/refitrihidayatullah/task-go/entities"
+	"github.com/refitrihidayatullah/task-go/libraries"
 	"github.com/refitrihidayatullah/task-go/models"
 )
+
+// memanggil validation
+var validation = libraries.NewValidation()
 
 // memanggil fuc newTaskModel di models taskmodel.go
 var taskModel = models.NewTaskModel()
@@ -47,14 +51,21 @@ func Add(response http.ResponseWriter, request *http.Request) {
 		task.Status = request.Form.Get("Status")
 		task.Deadline = request.Form.Get("Deadline")
 
-		// fmt.Println(task)
-		// memanggil variabel task model diatas
-		taskModel.Create(task)
+		var data = make(map[string]interface{})
+		vErrors := validation.Struct(task)
+
+		if vErrors != nil {
+			// menmpung data yang sudah diisi agar tdk perlu mengisi kembali saat ada err
+			data["task"] = task
+			data["validation"] = vErrors
+		} else {
+			data["pesan"] = "Data task berhasil disimpan"
+			// memanggil variabel task model diatas
+			taskModel.Create(task)
+		}
+
 		// jika berhasil disimpan tampilkan berikut ini
 		temp, _ := template.ParseFiles("views/task/add.html")
-		data := map[string]interface{}{
-			"pesan": "Data task berhasil disimpan",
-		}
 		temp.Execute(response, data)
 
 	}
