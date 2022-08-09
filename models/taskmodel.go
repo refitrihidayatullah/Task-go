@@ -82,3 +82,24 @@ func (t *TaskModel) Create(task entities.Task) bool {
 	return lastInsertId > 0
 
 }
+
+func (t *TaskModel) Find(id int64, task *entities.Task) error {
+
+	return t.conn.QueryRow("select * from task where id =?", id).Scan(
+		&task.Id,
+		&task.TaskDetail,
+		&task.Assignee,
+		&task.Status,
+		&task.Deadline)
+}
+
+// update
+func (t *TaskModel) Update(task entities.Task) error {
+	_, err := t.conn.Exec("update task set task_detail=?, assignee=?, status=?, deadline=? where id =?",
+		task.TaskDetail, task.Assignee, task.Status, task.Deadline, task.Id)
+
+	if err != nil {
+		return err
+	}
+	return nil
+}

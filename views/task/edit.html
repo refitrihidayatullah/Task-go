@@ -19,7 +19,7 @@
 
 <body>
     <div class="container-sm mt-5">
-        <h3 class="d-flex justify-content-center">Form Add Task</h3>
+        <h3 class="d-flex justify-content-center">Form Update Task</h3>
         <div class="mt-5 d-flex justify-content-end">
             <a href="/task" class="btn btn-sm btn-primary">Show Task</a>
         </div>
@@ -35,10 +35,10 @@
 
 
 
-        <form action="/task/add" method="post" class="p-3 mt-2">
+        <form action="/task/edit" method="post" class="p-3 mt-2">
             <label class="form-label">Task Detail</label>
             <div class="form-floating">
-                <textarea name="taskDetail" class="form-control {{ if .validation.TaskDetail }} is-invalid {{ end }}" placeholder="Task a comment here"></textarea>
+                <textarea id="taskDetail" name="taskDetail" class="form-control {{ if .validation.TaskDetail }} is-invalid {{ end }}" placeholder="Task a comment here">{{ .task.TaskDetail }}</textarea>
                 <div class="invalid-feedback">
                     {{ .validation.TaskDetail }}
 
@@ -48,7 +48,7 @@
             </div>
             <div class="mb-3">
                 <label for="Assignee" class="form-label">Assignee</label>
-                <input type="text" name="Assignee" class="form-control  {{ if .validation.Assignee }} is-invalid {{ end }}" placeholder="Enter Assignee">
+                <input type="text" name="Assignee" value="{{ .task.Assignee}}" class="form-control  {{ if .validation.Assignee }} is-invalid {{ end }}" placeholder="Enter Assignee ..">
                 <div class="invalid-feedback">
                     {{ .validation.Assignee }}
                 </div>
@@ -77,7 +77,8 @@
             </div>
 
             <div class="d-grid gap-2">
-                <button type="submit" class="btn btn-primary ">Submit</button>
+                <input type="text" name="id" value="{{ .task.Id }}">
+                <button type="submit" class="btn btn-primary ">Update</button>
             </div>
         </form>
 

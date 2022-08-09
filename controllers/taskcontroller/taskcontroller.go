@@ -2,6 +2,7 @@ package taskcontroller
 
 import (
 	"net/http"
+	"strconv"
 	"text/template"
 
 	"github.com/refitrihidayatullah/task-go/entities"
@@ -72,7 +73,55 @@ func Add(response http.ResponseWriter, request *http.Request) {
 
 }
 func Edit(response http.ResponseWriter, request *http.Request) {
+	if request.Method == http.MethodGet {
 
+		queryString := request.URL.Query()
+		id, _ := strconv.ParseInt(queryString.Get("id"), 10, 64)
+
+		var task entities.Task
+		taskModel.Find(id, &task)
+
+		data := map[string]interface{}{
+			"task": task,
+		}
+
+		temp, err := template.ParseFiles("views/task/edit.html")
+		if err != nil {
+			panic(err)
+		}
+		temp.Execute(response, data)
+	} else if request.Method == http.MethodPost {
+		request.ParseForm()
+
+		// folder struct
+		var task entities.Task
+
+		task.Id, _ = strconv.ParseInt(request.Form.Get("id"), 10, 64)
+
+		//inputan yg diterima dari form ditangkap dan diteruskan di folder stuct entities task
+		task.TaskDetail = request.Form.Get("taskDetail")
+		task.Assignee = request.Form.Get("Assignee")
+		task.Status = request.Form.Get("Status")
+		task.Deadline = request.Form.Get("Deadline")
+
+		var data = make(map[string]interface{})
+		vErrors := validation.Struct(task)
+
+		if vErrors != nil {
+			// menmpung data yang sudah diisi agar tdk perlu mengisi kembali saat ada err
+			data["task"] = task
+			data["validation"] = vErrors
+		} else {
+			data["pesan"] = "Data task berhasil di update"
+			// memanggil variabel task model diatas
+			taskModel.Update(task)
+		}
+
+		// jika berhasil disimpan tampilkan berikut ini
+		temp, _ := template.ParseFiles("views/task/edit.html")
+		temp.Execute(response, data)
+
+	}
 }
 func Delete(response http.ResponseWriter, request *http.Request) {
 

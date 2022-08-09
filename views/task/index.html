@@ -45,7 +45,7 @@
                 <tr>
                     <!-- <th scope="col">No</th> -->
                     <th scope="col">Task Detail</th>
-                    <th scope="col">Asignee</th>
+                    <th scope="col">Assignee</th>
                     <th scope="col">Status</th>
                     <th scope="col">Deadline</th>
                     <th scope="col">Action</th>
@@ -61,7 +61,7 @@
                     <td>{{ .Deadline }}</td>
                     <td>
                         <a href="/task/edit?id={{ .Id }}" class="btn btn-warning btn-sm">Edit</a>
-                        <a href="/task/edit?id={{ .Id }}" onclick="return confirm('Apakah anda yakin ingin menghapus?')" class="btn btn-danger btn-sm">Edit</a>
+                        <a href="/task/edit?id={{ .Id }}" onclick="return confirm('Apakah anda yakin ingin menghapus?')" class="btn btn-danger btn-sm">Delete</a>
                     </td>
                 </tr>
                 {{ end }}

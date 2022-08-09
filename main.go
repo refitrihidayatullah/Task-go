@@ -13,7 +13,7 @@ func main() {
 	http.HandleFunc("/task", taskcontroller.Index)
 	http.HandleFunc("/task/index", taskcontroller.Index)
 	http.HandleFunc("/task/add", taskcontroller.Add)
-	http.HandleFunc("/task/edit", taskcontroller.Index)
+	http.HandleFunc("/task/edit", taskcontroller.Edit)
 	http.HandleFunc("/task/delete", taskcontroller.Index)
 
 	// port 3000
